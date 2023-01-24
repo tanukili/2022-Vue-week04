@@ -1,5 +1,7 @@
 // 載入 Vue
 import { createApp } from 'https://cdnjs.cloudflare.com/ajax/libs/vue/3.2.45/vue.esm-browser.min.js';
+// 匯入 pagination 模組
+import pagination from './pagination.js';
 
 // 宣告 Modal (因為全域會使用到)
 let productModal = {};
@@ -34,6 +36,10 @@ const app = {
         axios.defaults.headers.common['Authorization'] = token;
         // 記得要加 this
         this.checkAdmin();
+    },
+    // 元件-區域註冊
+    components: {
+        pagination,
     },
     methods: {
         // 串接 api：檢查權限
