@@ -19,6 +19,7 @@ const app = {
                 imagesUrl: [],
             },
             isNew: false, // 確認是編輯或新增用
+            page: {}, // 儲存分頁資料用
         }
     },
     // 使用 created() 會報錯，因為是 html 渲染前調用；mounted() 則是渲染後再針對 html 的 dom 進行操作
@@ -57,12 +58,13 @@ const app = {
                 })
         },
         // 串接 api：取得產品資料
-        getData() {
-            const url = `${this.apiUrl}/api/${this.apiPath}/admin/products`;
+        getData(page = 1) { // 加入參數：決定要到第幾頁，並欲設參數為 1
+            const url = `${this.apiUrl}/api/${this.apiPath}/admin/products/?page=${page}`;
             axios.get(url)
                 .then((res) => {
-                    this.products= res.data.products;
-                    console.log(this.products);
+                    this.products = res.data.products;
+                    this.page = res.data.pagination;
+                    console.log(this.page);
                 })
                 .catch((err) => {
                     alert(err.data.message);

@@ -1,4 +1,6 @@
 export default {
+    // prop 將外層資料傳入內層
+    props: ['page'],
     template: `<nav aria-label="Page navigation example">
     <ul class="pagination">
       <li class="page-item">
