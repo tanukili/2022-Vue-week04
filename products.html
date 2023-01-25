@@ -64,7 +64,9 @@
           </tbody>
         </table>
       </div>
-      <pagination :page="page"></pagination>
+      <!-- 傳遞外層資料、方法（記得大寫要轉小寫） -->
+      <pagination :pages="page"
+        :get-data="getData"></pagination>
       <!-- Modal -->
       <div id="productModal" ref="productModal" class="modal fade" tabindex="-1" aria-labelledby="productModalLabel"
            aria-hidden="true">
