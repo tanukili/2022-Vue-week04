@@ -30,3 +30,8 @@ export default {
     </ul>
   </nav>`
 }
+// 另一種寫法：使用 emit 觸發外層方發 getData
+// 將 當前頁面取名為 change-page 傳出
+// @click.prevent="$emit('change-page', page)"
+// 在 html 元件中使用 v-on 觸發外層方法
+// <pagination :pages="page" :change-page="getData"></pagination>
