@@ -2,7 +2,7 @@ export default {
     // prop 將外層資料傳入內層
     props: ['pages', 'getData'],
     template: `<nav aria-label="Page navigation example">
-    <ul class="pagination">
+    <ul class="pagination justify-content-center">
       <li class="page-item"
         :class="{ disabled: !pages.has_pre }">
         <a class="page-link" href="#" aria-label="Previous"
