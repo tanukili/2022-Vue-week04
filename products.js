@@ -7,7 +7,7 @@ import pagination from './pagination.js';
 let productModal = {};
 let delProductModal = {};
 
-const app = {
+const app = createApp ({
     data() {
         return {
             // api 路徑
@@ -64,7 +64,6 @@ const app = {
                 .then((res) => {
                     this.products = res.data.products;
                     this.page = res.data.pagination;
-                    console.log(this.page);
                 })
                 .catch((err) => {
                     alert(err.data.message);
@@ -130,6 +129,11 @@ const app = {
                 })
         }
     },
-};
+});
+// 元件位置必須在 createApp 後，mount前
+app.component('product-modal', {
+    props: ['tempProduct', 'updateProduct'],
+    template: '#product-modal-template',
+});
   
-createApp(app).mount('#app')
+app.mount('#app');
