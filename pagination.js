@@ -29,7 +29,7 @@ export default {
       </li>
     </ul>
   </nav>`
-}
+};
 // 另一種寫法：使用 emit 觸發外層方發 getData
 // 將 當前頁面取名為 change-page 傳出
 // @click.prevent="$emit('change-page', page)"
