@@ -70,42 +70,23 @@
       <!-- Modal -->
       <div id="productModal" ref="productModal" class="modal fade" tabindex="-1" aria-labelledby="productModalLabel"
       aria-hidden="true">
-        <product-modal :temp-product="tempProduct" :edit-product="updateProduct"></product-modal>
+        <product-modal :temp-product="tempProduct" :is-new="isNew" :update-product="updateProduct"></product-modal>
       </div>
+
       <div id="delProductModal" ref="delProductModal" class="modal fade" tabindex="-1"
            aria-labelledby="delProductModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
-          <div class="modal-content border-0">
-            <div class="modal-header bg-danger text-white">
-              <h5 id="delProductModalLabel" class="modal-title">
-                <span>刪除產品</span>
-              </h5>
-              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-              是否刪除
-              <strong class="text-danger">{{ tempProduct.title }}</strong> 商品(刪除後將無法恢復)。
-            </div>
-            <div class="modal-footer">
-              <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">
-                取消
-              </button>
-              <button type="button" class="btn btn-danger" @click="deleteProduct">
-                確認刪除
-              </button>
-            </div>
-          </div>
-        </div>
+        <delete-modal :temp-product="tempProduct" :delete-product="deleteProduct"></delete-modal>
       </div>
       <!-- Modal -->
     </div>
 
+    <!-- x-template -->
     <script type="text/x-template" id="product-modal-template">
       <div class="modal-dialog modal-xl">
         <div class="modal-content border-0">
           <div class="modal-header bg-dark text-white">
             <h5 id="productModalLabel" class="modal-title">
-              <span>新增產品</span>
+              <span>{{ isNew ? '新增產品' : '編輯產品' }}</span>
             </h5>
             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
           </div>
@@ -122,7 +103,7 @@
                 </div>
                 <div>
                   <!-- 判斷 tempProduct.imagesUrl 是一個陣列（避免資料格式錯誤造成意外） -->
-                  <div v-if="Array.isArray(tempProduct.imagesUrl)">
+                  <template v-if="Array.isArray(tempProduct.imagesUrl)">
                   <!-- 當沒有 id 時，可以設定 key + 字串 -->
                     <template v-for="(img, key) in tempProduct.imagesUrl" :key="key + 123">
                     <!-- 當需要調整陣列中的原始值時，最好使用索引值帶入（傳參考特性） -->
@@ -138,7 +119,7 @@
                     <button class="btn btn-outline-danger btn-sm d-block w-100" @click="tempProduct.imagesUrl.pop('')" v-else="!tempProduct.imagesUrl.length">
                     刪除圖片
                     </button>
-                  </div>
+                  </template>
                 </div>
               </div>
               <div class="col-sm-8">
@@ -200,13 +181,38 @@
             <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">
               取消
             </button>
-            <button type="button" class="btn btn-primary" @click="$emit('edit-product')">
+            <button type="button" class="btn btn-primary" @click="updateProduct">
               確認
             </button>
           </div>
         </div>
       </div>
     </script>
+    <script type="text/x-template" id="delete-modal-template">
+      <div class="modal-dialog">
+        <div class="modal-content border-0">
+          <div class="modal-header bg-danger text-white">
+            <h5 id="delProductModalLabel" class="modal-title">
+              <span>刪除產品</span>
+            </h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+            是否刪除
+            <strong class="text-danger">{{ tempProduct.title }}</strong> 商品(刪除後將無法恢復)。
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">
+              取消
+            </button>
+            <button type="button" class="btn btn-danger" @click="deleteProduct">
+              確認刪除
+            </button>
+          </div>
+        </div>
+      </div>
+    </script>
+
     <script src='https://cdnjs.cloudflare.com/ajax/libs/axios/0.9.1/axios.min.js'
             integrity='sha512-Xk3wWei2TGrsh9kDSBKUMIjw/86sLUvhtnv9f7fOuIwhhiUTKz8szkWkzHthrM5Bb3Bu9idSzkxOrkzhcneuiw=='
             crossorigin='anonymous'></script>
